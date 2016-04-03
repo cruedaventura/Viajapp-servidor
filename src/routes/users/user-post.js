@@ -8,7 +8,9 @@ router.post('/user', function(req, res, next) {
         {
             id:   req.body.id,
             name: req.body.name,
-            pass: req.body.pass
+            pass: req.body.pass,
+            email: req.body.email,
+            city: req.body.city
         }
     );
 
@@ -16,8 +18,13 @@ router.post('/user', function(req, res, next) {
         if (err) return console.error(err);
     });
 
-    res.json(user.toObject());
-    res.status(201).end();
+    User.find({}).exec().then(function (users) {
+        res.json(users).end();
+    });
+
+    //res.json(user.toObject());
+
+
 });
 
 

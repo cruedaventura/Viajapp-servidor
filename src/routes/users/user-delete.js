@@ -7,24 +7,22 @@ var router  = express.Router();
 
 var User = require('./../../models/user');
 
-router.delete('/user/delete', function(req, res, next) {
+router.delete('/user/delete/:id', function(req, res, next) {
+
     var user = new User(
         {
-            id:   req.body.id,
-            name: req.body.name,
-            pass: req.body.pass
+            id:   req.params.id
         }
     );
-    
 
-    console.log(user.id);
     User.find({id:user.id},(function (err, user) {
         if (err) return console.error(err);
 
     })).remove().exec();
 
-    
-    res.status(201).end();
+    User.find({}).exec().then(function (users) {
+        res.json(users).end();
+    });
 });
 
 module.exports = router;

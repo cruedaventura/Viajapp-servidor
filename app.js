@@ -5,7 +5,8 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
-
+var router  = express.Router();
+var path = require('path');
 
 var routes    = require('./src/routes/index');
 var users_get = require('./src/routes/users/users-get');
@@ -26,7 +27,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
-app.use('/', users_get);
+app.use('/users', users_get);
 app.use('/', user_post);
 app.use('/', user_update);
 app.use('/', user_delete);
@@ -62,6 +63,13 @@ app.use(function(err, req, res, next) {
   });
 });
 
-app.listen(5885);
+//app.get('/', function(req, res) {
+  //res.sendFile(path.join(__dirname, 'angular', 'index.html'));
+  //res.sendFile('/home/carol/Code/EA/proyecto/angular/index.html');
+  //res.sendFile('index.html', {root: path.join(__dirname, 'angular')})
+//});
+
+
+app.listen(5885, '127.0.0.1');
 
 module.exports = app;
