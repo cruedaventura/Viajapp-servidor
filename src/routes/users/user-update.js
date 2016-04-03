@@ -11,17 +11,22 @@ router.put('/user/update', function(req, res, next) {
         {
             id:   req.body.id,
             name: req.body.name,
-            pass: req.body.pass
+            pass: req.body.pass,
+            email: req.body.email,
+            city: req.body.city
         }
     );
 
-    User.findOneAndUpdate({id: user.id}, {pass: user.pass} ,function (err, user) {
+    User.findOneAndUpdate({id: user.id}, {pass: user.pass, email: user.email, city: user.city} ,function (err, user) {
         if (err) return console.error(err);
 
     });
 
-    res.json(user.toObject());
-    res.status(201).end();
+    //res.json(user.toObject());
+
+    User.find({}).exec().then(function (users) {
+        res.json(users).end();
+    });
 });
 
 module.exports = router;
