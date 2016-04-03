@@ -19,7 +19,6 @@ router.put('/user/update', function(req, res, next) {
 
     User.findOneAndUpdate({id: user.id}, {pass: user.pass, email: user.email, city: user.city} ,function (err, user) {
         if (err) return console.error(err);
-
     });
 
     //res.json(user.toObject());
