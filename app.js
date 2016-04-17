@@ -14,6 +14,21 @@ var user_post = require('./src/routes/users/user-post');
 var user_update = require('./src/routes/users/user-update');
 var user_delete = require('./src/routes/users/user-delete');
 
+var route_post = require('./src/routes/routes/route-post');
+var routes_get = require('./src/routes/routes/routes-get');
+var route_delete = require('./src/routes/routes/route-delete');
+var route_update = require('./src/routes/routes/route-update');
+
+var student_post = require('./src/routes/student/student-post');
+var students_get = require('./src/routes/student/students-get');
+var student_delete = require('./src/routes/student/student-delete');
+
+var subject_post = require('./src/routes/subject/subject-post');
+var subjects_get = require('./src/routes/subject/subjects-get');
+var subject_delete = require('./src/routes/subject/subject-delete');
+var subject_update = require('./src/routes/subject/subject-update');
+
+
 var app = express();
 
 mongoose.connect('mongodb://localhost/viajapp');
@@ -31,6 +46,21 @@ app.use('/users', users_get);
 app.use('/', user_post);
 app.use('/', user_update);
 app.use('/', user_delete);
+
+app.use('/', route_post);
+app.use('/', routes_get);
+app.use('/', route_delete);
+app.use('/', route_update);
+
+app.use('/', student_post);
+app.use('/', students_get);
+app.use('/', student_delete);
+
+app.use('/', subject_update);
+app.use('/', subject_post);
+app.use('/', subjects_get);
+app.use('/', subject_delete);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -63,17 +93,7 @@ app.use(function(err, req, res, next) {
   });
 });
 
-<<<<<<< HEAD
-app.listen(5885,'147.83.7.156');
-=======
-//app.get('/', function(req, res) {
-  //res.sendFile(path.join(__dirname, 'angular', 'index.html'));
-  //res.sendFile('/home/carol/Code/EA/proyecto/angular/index.html');
-  //res.sendFile('index.html', {root: path.join(__dirname, 'angular')})
-//});
-
 
 app.listen(5885, '127.0.0.1');
->>>>>>> fc638536fc0dfa4319e208c9403ba70328a01545
 
 module.exports = app;

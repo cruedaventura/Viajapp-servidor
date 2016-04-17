@@ -2,61 +2,162 @@
 
 <html ng-app="MainApp">
 <head>
+
+    <meta charset="utf-8">
+    <style>
+        .primero,.segundo {
+            display:none;
+            padding:5px;
+            border:1px solid #ccc;
+            background-color:#f1f1f1;
+            position:relative;
+            width:200px;
+        }
+        #segundo {
+            position:absolute;
+            top:100px;
+        }
+        /* Al pasar el mouse por encima del div mostramos el div con la
+            clase ".primero". Esta clase, tiene que estar dentro del id
+            "primero" para que pueda funcionar
+         */
+        #primero:hover .primero {
+            display:block;
+        }
+        #segundo:hover .segundo {
+            display:block;
+        }
+    </style>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Ejemplo MEAN</title>
+    <title>Ejemplo</title>
     <!-- Cargamos bootstrap -->
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/custom.css">
+
     <!-- Cargamos angular -->
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script>
     <!-- Cargamos el javascript de angular -->
     <script src="core.js"></script>
 
+
+    <nav class="navbar navbar-default" navbar-fixed-top role="navigation">
+        <div class="container-fluid">
+            <!--header section -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Viajapp</a>
+            </div>
+            <!-- menu section -->
+            <div class="collapse navbar-collapse navbar-ex1-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="rutas.html">Rutas</a></li>
+                    <li><a href="lateral.html">Login</a></li>
+                    <li><a href="#">Register</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 </head>
-<body ng-controller="mainController">
+<body background="images/fondo.jpg" ng-controller="mainController">
 <div class="container">
 
     <div class="jumbotron text-center" ng-prueba>
-        <h1>Nº de Registros: <span class="label label-success">{{ personas.length }}</span></h1>
+        <h1>Nº de Subjects: <span class="label label-success">{{ subjects.length }}</span></h1>
     </div>
 
     <div class="row">
         <div class="col-sm-6 col-sm-offset-1">
             <table class="table table-striped">
                 <tr class="info">
+                    <td>Name</td>
+                    <td>Students</td>
+                </tr>
+                <tr ng-repeat="subject in subjects" >
+                    <td>{{ subject.name }}</td>
+                    <td>{{ subject.students }}</td>
+                    <!--<ul>
+                        <li id="primero">mostrar el primer div oculto
+                            <div class="primero">Contenido del primer div</div>
+                        </li>
+                        <li id="segundo">mostrar el segundo div oculto
+                            <div class="segundo">Contenido del segundo div</div>
+                        </li>
+                    </ul>-->
+
+                </tr>
+            </table>
+        </div>
+
+        <div class="col-sm-4 col-sm-offset-1 text-center">
+            <form name="myForm">
+                <div class="form-group">
+
+                    <input type="text" class="form-control input-lg text-center" placeholder="Name" ng-model="newSubject.name" required>
+                    <br>
+                    <input type="text" class="form-control input-lg text-center" placeholder="Students" ng-model="newSubject.students" >
+                    <br>
+                    <!--<input type="password" class="form-control input-lg text-center" value="" placeholder="Pass"  name = "pass1" id = "pass1" ng-model="newPersona.pass" >
+                    <br>
+                    <input type="password" class="form-control input-lg text-center" value="" placeholder="Repeat Pass" name = "pass2" id = "pass2" ng-keyup="verificar(newPersona.pass2);" ng-model="newPersona.pass2">
+                    <span id="mensaje"><!-- mensaje de verificación </span><br />!verificar(newPersona.pass2)== true
+                    <br>
+                    <input type="text" class="form-control input-lg text-center" placeholder="City" ng-model="newPersona.city" >-->
+                </div>
+
+                <!-- Acciones que podemos realizar en el formulario -->
+                <button type="submit" id =1 class="btn btn-success btn-lg" ng-click="registrarSubject()" ng-disabled="myForm.$invalid || !newSubject.name || selected">Registrar</button>
+                <button type="submit" class="btn btn-warning btn-lg" ng-click="modificarSubject(newSubject)" ng-disabled="!newSubject.name || selected">Modificar</button>
+            </form>
+        </div>
+
+        <div class="col-sm-6 col-sm-offset-1">
+            <table class="table table-striped">
+                <td><a href="#" ng-click="mostrarStudent() ">Detalle Todos students</a></td>
+                <tr class="info">
                     <td>ID</td>
                     <td>Name</td>
-                    <td>Email</td>
-                    <td>City</td>
+                    <td>Address</td>
+                    <td>Phones</td>
                 </tr>
-                <tr ng-repeat="persona in personas" ng-click="selectPerson(persona)">
-                    <td>{{ persona.id }}</td>
-                    <td>{{ persona.name }}</td>
-                    <td>{{ persona.email }}</td>
-                    <td>{{ persona.city }}</td>
-                    <td><a href="#" ng-click="borrarPersona(persona.id)">Eliminar</a></td>
+                <tr ng-repeat="student in students">
+                    <td>{{ student._id }}</td>
+                    <td>{{ student.name }}</td>
+                    <td>{{ student.address }}</td>
+                    <td>{{ student.phones }}</td>
+                    <!--<td>{{ persona.name }}</td>-->
+                    <!--<td><a href="#" ng-click="borrarPersona(persona.name) && ng-alert('Quieres borrar la perssona?')">Eliminar</a></td>-->
                 </tr>
             </table>
         </div>
         <div class="col-sm-4 col-sm-offset-1 text-center">
-            <form name="myForm">
+            <form name="myForm2">
                 <div class="form-group">
-                    <input type="text" class="form-control input-lg text-center" placeholder="ID" ng-model="newPersona.id" required>
+
+                    <input type="text" class="form-control input-lg text-center" placeholder="Name" ng-model="newStudent.name" required>
                     <br>
-                    <input type="text" class="form-control input-lg text-center" placeholder="Name" ng-model="newPersona.name" >
+                    <input type="text" class="form-control input-lg text-center" placeholder="Address" ng-model="newStudent.address" required>
                     <br>
-                    <input type="text" class="form-control input-lg text-center" placeholder="Email" ng-model="newPersona.email" >
+                    <input type="text" class="form-control input-lg text-center" placeholder="Phones" ng-model="newStudent.phones" required>
                     <br>
-                    <input type="text" class="form-control input-lg text-center" placeholder="Pass" ng-model="newPersona.pass" >
+                    <!--<input type="password" class="form-control input-lg text-center" value="" placeholder="Pass"  name = "pass1" id = "pass1" ng-model="newPersona.pass" >
                     <br>
-                    <input type="text" class="form-control input-lg text-center" placeholder="City" ng-model="newPersona.city" >
+                    <input type="password" class="form-control input-lg text-center" value="" placeholder="Repeat Pass" name = "pass2" id = "pass2" ng-keyup="verificar(newPersona.pass2);" ng-model="newPersona.pass2">
+                    <span id="mensaje"><!-- mensaje de verificación </span><br />!verificar(newPersona.pass2)== true
+                    <br>
+                    <input type="text" class="form-control input-lg text-center" placeholder="City" ng-model="newPersona.city" >-->
                 </div>
 
                 <!-- Acciones que podemos realizar en el formulario -->
-                <button type="submit" class="btn btn-success btn-lg" ng-click="registrarPersona()" ng-disabled="myForm.$invalid || !newPersona.id || !newPersona.pass|| !newPersona.email|| !newPersona.city || !newPersona.name || selected">Registrar</button>
-                <button type="submit" class="btn btn-warning btn-lg" ng-click="modificarPersona(newPersona)" ng-disabled="!newPersona.id || !newPersona.pass|| !newPersona.email|| !newPersona.city || !newPersona.name || selected">Modificar</button>
-                <button type="submit" class="btn btn-danger btn-lg" ng-click="borrarPersona(newPersona.id)" ng-disabled="!newPersona.id ||selected">Borrar</button>
-            </form>
+                <button type="submit" class="btn btn-warning btn-lg" ng-click="registrarStudent()" ng-disabled=" !newStudent.name || selected">Registrar</button>
+                </form>
         </div>
     </div>
 </div>

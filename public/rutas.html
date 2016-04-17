@@ -1,0 +1,107 @@
+<!doctype html>
+
+<html ng-app="MainApp">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Ejemplo viajes</title>
+    <!-- Cargamos bootstrap -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/custom.css">
+
+    <!-- Cargamos angular -->
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script>
+    <!-- Cargamos el javascript de angular -->
+    <script src="rutas.js"></script>
+
+
+    <nav class="navbar navbar-default" navbar-fixed-top role="navigation">
+        <div class="container-fluid">
+            <!--header section -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Viajapp</a>
+            </div>
+            <!-- menu section -->
+            <div class="collapse navbar-collapse navbar-ex1-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="rutas.html">Rutas</a></li>
+                    <li><a href="lateral.html">Login</a></li>
+                    <li><a href="#">Register</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</head>
+<body background="images/fondo.jpg" ng-controller="mainController">
+<div class="container">
+
+    <div class="jumbotron text-center" ng-prueba>
+        <h1>Nº de Registros: <span class="label label-success">{{ rutas.length }}</span></h1>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-6 col-sm-offset-1">
+            <table class="table table-striped">
+                <tr class="info">
+                    <td>Name</td>
+                    <td>Type</td>
+                    <td>City</td>
+                    <td>Time</td>
+                    <td>Interest</td>
+                </tr>
+
+                <script type="text/ng-template" id="ng-confirm-template">
+                    <div class="modal-body">
+                        <p>{{message}}</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-link pull-left" ng-click="no()">No</button>
+                        <button class="btn btn-primary pull-right" ng-click="yes()">Yes</button>
+                    </div>
+                </script>
+
+                <tr ng-repeat="ruta in rutas" ng-click="selectRuta(ruta)">
+                    <td>{{ ruta.name }}</td>
+                    <td>{{ ruta.type }}</td>
+                    <td>{{ ruta.city }}</td>
+                    <td>{{ ruta.time }}</td>
+                    <td>{{ ruta.interest }}</td>
+                    <td><a href="#" ng-click="borrarRuta(ruta.name)" >Eliminar</a></td>
+
+
+                </tr>
+            </table>
+        </div>
+        <div class="col-sm-4 col-sm-offset-1 text-center">
+            <form name="myForm">
+                <div class="form-group">
+
+                    <input type="text" class="form-control input-lg text-center" placeholder="Name" ng-model="newRuta.name" required>
+                    <br>
+                    <input type="text" class="form-control input-lg text-center" placeholder="Type" ng-model="newRuta.type" >
+                    <br>
+                    <input type="text" class="form-control input-lg text-center" placeholder="City" ng-model="newRuta.city" >
+                    <br>
+                    <input type="text" class="form-control input-lg text-center" placeholder="Time" ng-model="newRuta.time" >
+                    <br>
+                    <input type="text" class="form-control input-lg text-center" placeholder="Interests" ng-model="newRuta.interest" >
+                </div>
+
+                <!-- Acciones que podemos realizar en el formulario -->
+                <button type="submit" class="btn btn-success btn-lg" ng-click="registrarRuta()" ng-disabled="myForm.$invalid || !newRuta.name || !newRuta.type|| !newRuta.city|| !newRuta.time || !newRuta.interest || selected">Registrar</button>
+                <button type="submit" class="btn btn-warning btn-lg" ng-click="modificarRuta(newRuta)" ng-disabled="!newRuta.name || !newRuta.type|| !newRuta.city|| !newRuta.time  || !newRuta.interest  || selected">Modificar</button>
+                <button type="submit" class="btn btn-danger btn-lg" ng-click="borrarRuta(newRuta.name)" ng-disabled="!newRuta.name ||selected">Borrar</button>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>
